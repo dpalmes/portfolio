@@ -8,7 +8,7 @@
 
 export const stats = {
   /** Total test cases across the suite. */
-  tests: 180,
+  tests: 199,
   /** Tests covering the pitch detector specifically. */
   pitchTests: 33,
   /** Tests covering the sequencer's timing. */
