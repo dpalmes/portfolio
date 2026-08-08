@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ArrowIcon, ButtonLink, Container, Eyebrow } from "@/components/ui";
 import { activeSocials, displayName, site } from "@/content/site";
+import { stats } from "@/content/stats";
 
 export const metadata: Metadata = {
   title: "About",
@@ -57,8 +58,8 @@ export default function AboutPage() {
         <p className="mt-4 leading-relaxed text-ink-muted">
           Next.js and React on the front, Tailwind for styling, and no audio
           libraries at all — the pitch detection, the sequencer clock and the
-          music theory are written from scratch and covered by 154 unit tests
-          that run in Node in well under a second.
+          music theory are written from scratch and covered by {stats.tests}{" "}
+          unit tests that run in Node in well under a second.
         </p>
         <p className="mt-4 leading-relaxed text-ink-muted">
           The hero graphic on the front page is generated at build time by the

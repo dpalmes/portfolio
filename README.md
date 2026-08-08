@@ -1,36 +1,147 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio
 
-## Getting Started
+A personal portfolio site whose centrepieces are three interactive audio demos,
+each backed by an algorithm written from scratch and covered by unit tests.
 
-First, run the development server:
+- **Tuner** — real-time pitch detection from the microphone, using a from-scratch
+  implementation of the YIN algorithm.
+- **Sequencer** — a step sequencer with sample-accurate, drift-free timing and
+  drums synthesised from oscillators and filtered noise.
+- **Fretboard** — chord fingerings derived by searching the neck under physical
+  constraints, in any tuning, with no chord dictionary.
+
+Next.js 16, React 19, TypeScript, Tailwind 4, Vitest. No audio or music-theory
+dependencies — that is the point.
+
+## Getting started
+
+```bash
+npm install
+```
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The tuner needs microphone permission. Browsers only grant it on a secure
+origin, which `localhost` counts as — but a deployment must be served over
+HTTPS or the tuner will report that it cannot open the microphone.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Scripts
 
-## Learn More
+| Command             | What it does                                         |
+| ------------------- | ---------------------------------------------------- |
+| `npm run dev`       | Development server                                    |
+| `npm run build`     | Production build — every route prerenders to static   |
+| `npm run test`      | Unit tests (Vitest, Node — no browser needed)         |
+| `npm run typecheck` | `tsc --noEmit`                                        |
+| `npm run lint`      | ESLint                                                |
+| `npm run verify`    | Typecheck, lint and test in one go                    |
+| `npm run coverage`  | Test coverage for `src/lib`                           |
+| `npm run stats`     | Prints the figures quoted on the site (see below)     |
 
-To learn more about Next.js, take a look at the following resources:
+## Make it yours
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Everything personal lives in two files. Nothing else needs editing.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**`src/content/site.ts`** — name, role, intro, bio, email, social links,
+canonical URL. Fields marked `TODO` are placeholders. They are deliberately not
+filled with invented detail: the `roles` array is empty, so the Experience
+section does not render at all until you add to it, and social links with an
+empty `href` are hidden. The site looks finished either way.
 
-## Deploy on Vercel
+**`src/content/projects.ts`** — the three case studies, plus an
+`externalProjects` array holding stub entries for **BeatRoad** and **AI Guitar
+Teacher**. Those two were written from what was visible in the neighbouring
+repositories and are marked "In progress" — correct them, add links, or delete
+the array and the section disappears.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Set `site.url` to the real domain before deploying: it is the base for the
+canonical URLs, the sitemap and the Open Graph tags.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### The numbers on the site
+
+The test counts quoted in the copy live in `src/content/stats.ts` and are
+imported wherever they appear, so they are written once. After adding tests, run
+`npm run stats` and paste in the values it prints.
+
+## How it is put together
+
+```
+src/
+  lib/
+    audio/
+      yin.ts          YIN pitch detection — pure, no DOM
+      scheduler.ts    Step timing — pure, driven by an injected clock
+      voices.ts       Synthesised drums and plucked strings
+      ticker.ts       Worker-backed timer that survives background tabs
+      engine.ts       AudioContext lifecycle
+      mic.ts          Microphone capture and its failure modes
+      patterns.ts     Drum patterns, written as strings
+    music/
+      notes.ts        MIDI/frequency/cents, note-name parsing
+      scales.ts       Scale definitions, modes, degree labelling
+      chords.ts       Chord construction and recognition
+      fretboard.ts    Tunings, geometry, chord-shape search
+  components/
+    lab/              The three demos
+    ui.tsx            Shared primitives
+  content/            All copy and configuration
+  app/                Routes
+```
+
+The organising rule is that the interesting logic does not know the browser
+exists. Pitch detection takes a `Float32Array` and a sample rate. The sequencer's
+clock is told what time it is and asked what is due. Neither touches an
+`AudioContext`, which is why the whole of `src/lib` is testable in Node in under
+a second rather than through a headless browser.
+
+Web Audio itself is covered too, by a recording fake `AudioContext`
+(`src/lib/audio/fake-audio-context.ts`) that captures which nodes were created,
+how they were connected, and what automation was scheduled on each parameter.
+A test cannot listen to a kick drum, but it can assert that the pitch sweeps
+from 150 Hz to 48 Hz and that the envelope never ramps exponentially to zero.
+
+### Three decisions worth knowing about
+
+**The hero graphic is generated, not drawn.** It is a server component that runs
+the pitch detector over a synthetic A3 at build time and serialises the
+resulting difference curve into the markup. No chart library ships to the
+client, and if the detector changed, the picture would change with it. Same for
+the Open Graph image.
+
+**The sequencer's timer lives in a Web Worker.** Browsers clamp background
+timers to roughly one second. With a 120 ms scheduling window, a `setInterval`
+on the main thread would starve the scheduler the moment the tab lost focus and
+the pattern would stutter. Worker timers are not clamped. There is a
+`setInterval` fallback for environments where a Content Security Policy blocks
+constructing a worker from a blob URL.
+
+**The microphone opens with all the speech processing turned off.** Echo
+cancellation, noise suppression and automatic gain control are on by default and
+each one damages a pitch measurement — noise suppression treats a sustained note
+as stationary noise and attenuates it.
+
+## Accessibility
+
+Every control is a real button or input with a label. The sequencer grid is
+navigable by keyboard, with `aria-pressed` on each step. The tuner announces the
+detected note through a polite live region and nothing else — announcing the
+frequency would fire continuously and make a screen reader unusable. Colour is
+never the only signal: the tuner says "Sharp — tune down" as well as moving the
+needle. Animation is decorative throughout and is disabled under
+`prefers-reduced-motion`.
+
+## Deploying
+
+`npm run build` prerenders every route to static HTML, so the output can be
+hosted anywhere — Vercel, Netlify, Cloudflare Pages, or any static host. There is
+no server-side runtime, no database and no API key.
+
+Serve it over HTTPS, or the microphone will not open.
+
+## Licence
+
+Not currently licensed for reuse. Add one if you want that to change.

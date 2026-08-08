@@ -11,6 +11,7 @@ import {
 } from "@/components/ui";
 import { externalProjects, projects } from "@/content/projects";
 import { activeSocials, displayName, site } from "@/content/site";
+import { stats } from "@/content/stats";
 
 export default function HomePage() {
   return (
@@ -76,12 +77,12 @@ export default function HomePage() {
           <dl className="mt-6 grid grid-cols-2 gap-8 sm:grid-cols-4">
             <Stat
               label="Tests"
-              value="154"
+              value={stats.tests}
               hint="Pure logic, run in Node — no browser needed"
             />
             <Stat
               label="Audio deps"
-              value="0"
+              value={stats.audioDependencies}
               hint="YIN, scheduling and theory written from scratch"
             />
             <Stat

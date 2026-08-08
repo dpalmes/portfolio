@@ -7,6 +7,8 @@
  * delete them.
  */
 
+import { stats } from "./stats";
+
 export interface CaseStudySection {
   heading: string;
   body: string[];
@@ -46,7 +48,7 @@ export const projects: Project[] = [
       "YIN autocorrelation with cumulative mean normalisation, implemented from the 2002 paper",
       "Parabolic interpolation recovers sub-sample periods: 4 cents of rounding error becomes under 0.5",
       "Correctly tracks a fundamental that is quieter than its harmonics, and one that is missing entirely",
-      "33 unit tests drive the detector with synthetic tones in Node — no browser, no microphone, no flake",
+      `${stats.pitchTests} unit tests drive the detector with synthetic tones in Node — no browser, no microphone, no flake`,
     ],
     sources: ["src/lib/audio/yin.ts", "src/lib/audio/yin.test.ts"],
     sections: [

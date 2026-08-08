@@ -314,12 +314,20 @@ export function Sequencer() {
       </div>
 
       <div className="overflow-x-auto p-4 sm:p-5">
-        <div className="min-w-[34rem]">
+        {/* Below this the steps get too small to hit; the container scrolls
+            horizontally instead of shrinking them further. */}
+        <div className="min-w-[30rem]">
           <StepRuler current={playing ? currentStep : -1} />
           {DRUMS.map((drum) => (
             <div key={drum.id} className="mt-1.5 flex items-center gap-3">
-              <span className="w-24 shrink-0 truncate text-sm text-ink-muted">
-                {drum.label}
+              {/*
+                Abbreviations on narrow screens, where every pixel spent on the
+                label is a pixel taken from the grid. The full name stays
+                available to assistive tech via each step's own label.
+              */}
+              <span className="w-9 shrink-0 truncate text-sm text-ink-muted sm:w-24">
+                <span className="font-mono sm:hidden">{drum.short}</span>
+                <span className="hidden sm:inline">{drum.label}</span>
               </span>
               <div
                 role="group"
@@ -368,7 +376,7 @@ export function Sequencer() {
 function StepRuler({ current }: { current: number }) {
   return (
     <div className="flex items-center gap-3">
-      <span className="w-24 shrink-0" />
+      <span className="w-9 shrink-0 sm:w-24" />
       <div className="grid flex-1 grid-cols-16 gap-1">
         {Array.from({ length: STEPS_PER_BAR }, (_, step) => (
           <span

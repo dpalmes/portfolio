@@ -11,6 +11,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "coverage": "vitest run --coverage",
+    "stats": "node scripts/stats.mjs",
     "verify": "npm run typecheck && npm run lint && npm run test"
   },
   "dependencies": {
