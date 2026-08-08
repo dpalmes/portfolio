@@ -1,26 +1,152 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Theming is driven by a `data-theme` attribute on <html>, resolved before
+ * first paint by the inline script in the root layout. Using an explicit
+ * attribute rather than a media query means the manual toggle and the system
+ * preference go through exactly one code path.
+ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), var(--font-inter), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  /* Warm off-white paper rather than pure white — easier on the eye and it
+     keeps the amber accent from looking dirty. */
+  --color-canvas: #faf9f7;
+  --color-surface: #ffffff;
+  --color-raised: #f2f0ec;
+  --color-line: #e2ded7;
+  --color-ink: #17181a;
+  --color-ink-muted: #5f6165;
+  --color-ink-faint: #8b8d92;
+
+  /* Amber reads as "signal" on an instrument panel without the tired
+     terminal-green cliché. */
+  --color-accent: #b45309;
+  --color-accent-soft: #fdf0dd;
+  --color-accent-line: #e9c99a;
+
+  --color-good: #15803d;
+  --color-warn: #b45309;
+  --color-bad: #b91c1c;
+
+  --radius-panel: 0.75rem;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+[data-theme="dark"] {
+  --color-canvas: #0b0c0e;
+  --color-surface: #131519;
+  --color-raised: #1b1e23;
+  --color-line: #292d34;
+  --color-ink: #ece9e4;
+  --color-ink-muted: #9ba1aa;
+  --color-ink-faint: #6b7078;
+
+  --color-accent: #f0a94c;
+  --color-accent-soft: #2a2013;
+  --color-accent-line: #4d3a1d;
+
+  --color-good: #4ade80;
+  --color-warn: #f0a94c;
+  --color-bad: #f87171;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Keeps anchored headings clear of the sticky header. */
+    scroll-padding-top: 5rem;
+    color-scheme: light;
+  }
+
+  [data-theme="dark"] html,
+  html[data-theme="dark"] {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Numeric readouts must not jitter as digits change. */
+  .tabular {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-canvas);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  /* A hairline grid used behind hero sections. Pure CSS, so it costs no
+     requests and scales to any viewport. */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, var(--color-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-line) 1px, transparent 1px);
+    background-size: 3rem 3rem;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 20%, transparent 75%);
+  }
+
+  .panel {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-panel);
+  }
+}
+
+/*
+ * Motion is decorative here — every animation is an entrance or a hover, and
+ * none of them carry information. Honouring the user's preference costs
+ * nothing and the interfaces remain fully usable without them.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
