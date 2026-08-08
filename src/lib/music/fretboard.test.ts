@@ -194,6 +194,33 @@ describe("findChordShapes", () => {
     expect(loose.length).toBeGreaterThanOrEqual(strict.length);
   });
 
+  it("ranks the shape a guitarist would actually reach for first", () => {
+    // The real test of the scoring heuristic. None of these fingerings are
+    // stored anywhere — each is the top result of a fresh search — so if the
+    // ranking drifts, this is what catches it.
+    const canonical: Array<[number, string, number[]]> = [
+      [0, "major", [MUTED, 3, 2, 0, 1, 0]], // open C
+      [7, "major", [3, 2, 0, 0, 0, 3]], // open G
+      [9, "minor", [MUTED, 0, 2, 2, 1, 0]], // open Am
+      [4, "minor", [0, 2, 2, 0, 0, 0]], // open Em
+      [2, "minor7", [MUTED, MUTED, 0, 2, 1, 1]], // open Dm7
+    ];
+
+    for (const [root, qualityId, expected] of canonical) {
+      const [best] = findChordShapes(standard, root, getChordQuality(qualityId)!);
+      expect(best.frets, `${root} ${qualityId}`).toEqual(expected);
+    }
+  });
+
+  it("does not let open strings drag a high-position shape to the top", () => {
+    // Open strings ring wherever the hand is, so a search that rewards them
+    // too heavily will surface odd hybrids — frets at the 8th position with
+    // open strings mixed in — above the shapes people actually play.
+    const [best] = findChordShapes(standard, 0, major);
+    const openStrings = best.frets.filter((fret) => fret === 0).length;
+    if (openStrings > 0) expect(best.baseFret).toBeLessThanOrEqual(3);
+  });
+
   it("ranks its first suggestion as playable", () => {
     const [best] = findChordShapes(standard, 7, major);
     expect(best.span).toBeLessThanOrEqual(4);

@@ -162,12 +162,20 @@ function scoreShape(shape: Omit<ChordShape, "score">, tonesNeeded: number): numb
   let score = 0;
   score += distinctTones * 12; // covering the chord matters most
   score += sounding * 4; // fuller voicings sound better
-  score += open * 3; // open strings are free
+  score += open * 2; // open strings cost no finger
   score -= shape.span * 5; // stretches hurt
   score -= fretted * 1.5; // fewer fingers is easier
-  score -= shape.baseFret * 0.4; // low positions are marginally preferred
+  score -= shape.baseFret * 0.8; // low positions are easier to reach
   if (shape.rootPosition) score += 15;
   if (distinctTones < tonesNeeded) score -= 30; // incomplete chord
+
+  // Open strings ring at pitch wherever the hand is, so the search happily
+  // mixes them with notes high up the neck. Those voicings are legal and
+  // occasionally lovely, but they are not what somebody asking for "a C" wants,
+  // and without this they crowd out the shapes people actually play.
+  if (open > 0 && shape.baseFret > 3) {
+    score -= (shape.baseFret - 3) * 2;
+  }
 
   return score;
 }
