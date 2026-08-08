@@ -37,6 +37,13 @@ export function Tuner() {
 
   const sessionRef = useRef<MicrophoneSession | null>(null);
   const frameRef = useRef<number | null>(null);
+  /**
+   * Set when the user backs out while the permission prompt is still up.
+   * getUserMedia cannot be aborted, so the promise is left to settle and its
+   * result discarded — otherwise a stream would open with nothing listening to
+   * it, and the recording indicator would stay lit.
+   */
+  const abandonedRef = useRef(false);
   const smootherRef = useRef(new PitchSmoother());
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   // Read inside the animation loop, which must not be torn down and rebuilt
@@ -48,6 +55,7 @@ export function Tuner() {
   }, [a4]);
 
   const stop = useCallback(() => {
+    abandonedRef.current = true;
     if (frameRef.current !== null) {
       cancelAnimationFrame(frameRef.current);
       frameRef.current = null;
@@ -56,6 +64,7 @@ export function Tuner() {
     sessionRef.current = null;
     smootherRef.current.reset();
     setListening(false);
+    setStarting(false);
     setReading(null);
     setLevel(0);
   }, []);
@@ -63,8 +72,15 @@ export function Tuner() {
   const start = useCallback(async () => {
     setError(null);
     setStarting(true);
+    abandonedRef.current = false;
     try {
       const session = await startMicrophone();
+      // The prompt may have sat there a while; if the user gave up in the
+      // meantime, release the stream immediately rather than starting up.
+      if (abandonedRef.current) {
+        session.stop();
+        return;
+      }
       sessionRef.current = session;
       smootherRef.current.reset();
       setListening(true);
@@ -99,11 +115,13 @@ export function Tuner() {
       };
       frameRef.current = requestAnimationFrame(loop);
     } catch (cause) {
-      setError(
-        cause instanceof MicrophoneError
-          ? cause.message
-          : "Could not start the microphone.",
-      );
+      if (!abandonedRef.current) {
+        setError(
+          cause instanceof MicrophoneError
+            ? cause.message
+            : "Could not start the microphone.",
+        );
+      }
       stop();
     } finally {
       setStarting(false);
@@ -126,14 +144,18 @@ export function Tuner() {
   return (
     <div className="panel overflow-hidden">
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line p-4 sm:p-5">
+        {/*
+          Deliberately not disabled while starting. A permission prompt can sit
+          unanswered indefinitely, and a disabled button would leave the only
+          way out of that state as a page reload.
+        */}
         <Button
-          onClick={() => (listening ? stop() : void start())}
-          disabled={starting}
+          onClick={() => (listening || starting ? stop() : void start())}
           aria-pressed={listening}
           className="min-w-40"
         >
           {starting
-            ? "Starting…"
+            ? "Cancel"
             : listening
               ? "Stop listening"
               : "Start listening"}
