@@ -33,7 +33,7 @@ export default function AboutPage() {
       {site.skills.length > 0 ? (
         <section className="mt-16">
           <SectionLabel>Skills</SectionLabel>
-          <dl className="mt-6 grid gap-6 sm:grid-cols-3">
+          <dl className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {site.skills.map((group) => (
               <div key={group.label}>
                 <dt className="text-sm font-medium text-ink">{group.label}</dt>

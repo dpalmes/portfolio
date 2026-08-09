@@ -98,9 +98,9 @@ export const site: Site = {
       // started in July 2026. Replace these with concrete, measurable results
       // as they land, the way the Globe entry below reads.
       highlights: [
-        "Core Java middleware — EJB, JPA and Hibernate, built with Maven.",
-        "Systems integration over SOAP and REST web services between BSS, OSS and product platforms.",
-        "Full SDLC in an Agile team: analysis, development, automated testing, profiling, deployment and operational support.",
+        "Core Java middleware — EJB, JPA and Hibernate, built with Maven and deployed to JBoss/WildFly.",
+        "Systems integration over SOAP and REST web services between BSS, OSS and product platforms, exercised and debugged with SoapUI.",
+        "Full SDLC in an Agile team: analysis, development, automated testing, profiling, deployment and operational support, investigating data issues against SQL Server through SSMS.",
         "Technical and process documentation, including design specifications.",
         "Works across testing, product, network operations and project management teams.",
       ],
@@ -174,6 +174,7 @@ export const site: Site = {
         "REST",
         "SOAP",
         "SQL",
+        "SQL Server",
         "Aerospike",
         "Snowflake",
         "DynamoDB",
@@ -187,9 +188,14 @@ export const site: Site = {
         "AWS",
         "Kubernetes",
         "OpenShift",
+        "JBoss/WildFly",
         "Jenkins",
         "ArgoCD",
       ],
+    },
+    {
+      label: "Tools",
+      items: ["SoapUI", "SSMS", "Maven", "Git"],
     },
   ],
 
