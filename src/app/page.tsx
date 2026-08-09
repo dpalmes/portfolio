@@ -14,6 +14,8 @@ import { activeSocials, displayName, site } from "@/content/site";
 import { stats } from "@/content/stats";
 
 export default function HomePage() {
+  const [currentRole] = site.roles;
+
   return (
     <>
       <section className="relative overflow-hidden border-b border-line">
@@ -23,7 +25,7 @@ export default function HomePage() {
         />
         <Container className="relative py-20 sm:py-28">
           <div className="max-w-2xl">
-            <Eyebrow>Web Audio · DSP · TypeScript</Eyebrow>
+            <Eyebrow>Java · Kafka · GCP · TypeScript</Eyebrow>
             <h1 className="text-4xl leading-[1.05] font-semibold sm:text-6xl">
               {displayName}
               <span className="text-accent">.</span>
@@ -35,26 +37,85 @@ export default function HomePage() {
               {site.intro}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href="/lab">
-                Try the demos
+              <ButtonLink href="/about">
+                About me
                 <ArrowIcon />
               </ButtonLink>
-              <ButtonLink href="/work" variant="secondary">
-                Read the case studies
+              <ButtonLink href="/lab" variant="secondary">
+                Try the demos
               </ButtonLink>
             </div>
           </div>
-
-          <HeroCurve className="mt-14 max-w-3xl" />
         </Container>
       </section>
+
+      {currentRole ? (
+        <section className="border-b border-line py-16 sm:py-20">
+          <Container>
+            <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr]">
+              <div>
+                <Eyebrow>Currently</Eyebrow>
+                <h2 className="text-2xl font-semibold sm:text-3xl">
+                  {currentRole.title}
+                </h2>
+                <p className="mt-2 text-lg text-ink-muted">
+                  {currentRole.organisation}
+                  <span className="text-ink-faint">
+                    {" "}
+                    · {currentRole.period}
+                  </span>
+                </p>
+                <p className="mt-5 leading-relaxed text-ink-muted">
+                  {currentRole.summary}
+                </p>
+                <ButtonLink
+                  href="/about"
+                  variant="secondary"
+                  className="mt-7"
+                >
+                  Full background
+                  <ArrowIcon />
+                </ButtonLink>
+              </div>
+
+              <div>
+                <ul className="space-y-3">
+                  {currentRole.highlights.slice(0, 4).map((highlight) => (
+                    <li
+                      key={highlight}
+                      className="flex gap-3 text-ink-muted"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="mt-2.5 h-px w-4 shrink-0 bg-accent"
+                      />
+                      <span className="leading-relaxed">{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <ul className="mt-8 flex flex-wrap gap-1.5">
+                  {site.skills
+                    .flatMap((group) => group.items)
+                    .slice(0, 14)
+                    .map((item) => (
+                      <li key={item}>
+                        <Tag>{item}</Tag>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            </div>
+          </Container>
+        </section>
+      ) : null}
 
       <section className="py-20 sm:py-24">
         <Container>
           <SectionHeading
             eyebrow="Lab"
             title="Three things that had to be built, not installed"
-            description="Each of these runs in your browser and is backed by a tested, dependency-free core. The case studies explain the algorithm and the decisions behind it."
+            description="Real-time problems, taken apart in the browser: pitch detection, sample-accurate scheduling, and chord-shape search. Each runs on a tested, dependency-free core, and the case studies explain the algorithm behind it."
             action={
               <ButtonLink href="/lab" variant="secondary">
                 All demos
@@ -62,6 +123,8 @@ export default function HomePage() {
               </ButtonLink>
             }
           />
+
+          <HeroCurve className="mb-10" />
 
           <div className="grid gap-5 md:grid-cols-3">
             {projects.map((project) => (

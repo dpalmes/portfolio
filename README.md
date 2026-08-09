@@ -42,24 +42,29 @@ HTTPS or the tuner will report that it cannot open the microphone.
 | `npm run coverage`  | Test coverage for `src/lib`                           |
 | `npm run stats`     | Prints the figures quoted on the site (see below)     |
 
-## Make it yours
+## Content
 
 Everything personal lives in two files. Nothing else needs editing.
 
-**`src/content/site.ts`** — name, role, intro, bio, email, social links,
-canonical URL. Fields marked `TODO` are placeholders. They are deliberately not
-filled with invented detail: the `roles` array is empty, so the Experience
-section does not render at all until you add to it, and social links with an
-empty `href` are hidden. The site looks finished either way.
+**`src/content/site.ts`** — name, role, intro, bio, skills, experience,
+education, email and social links. Experience and education come from the CV.
+Any section backed by an empty array simply does not render, and social links
+with an empty `href` are hidden, so trimming is safe.
 
 **`src/content/projects.ts`** — the three case studies, plus an
-`externalProjects` array holding stub entries for **BeatRoad** and **AI Guitar
+`externalProjects` array holding entries for **BeatRoad** and **AI Guitar
 Teacher**. Those two were written from what was visible in the neighbouring
 repositories and are marked "In progress" — correct them, add links, or delete
 the array and the section disappears.
 
-Set `site.url` to the real domain before deploying: it is the base for the
-canonical URLs, the sitemap and the Open Graph tags.
+### Still to fill in
+
+- `site.url` — set to the real domain before deploying. It is the base for the
+  canonical URLs, the sitemap and the Open Graph tags.
+- `site.socials` — the GitHub entry has an empty `href` and is therefore hidden.
+- `site.phone` — left empty deliberately. A mobile number on a public page
+  mostly attracts spam; the CV carries it where it belongs. Fill it in if you
+  want it shown, and add it to the footer.
 
 ### The numbers on the site
 

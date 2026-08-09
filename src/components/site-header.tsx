@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { ThemeToggle } from "./theme-toggle";
-import { displayName } from "@/content/site";
+import { site } from "@/content/site";
 
 const links = [
   { href: "/lab", label: "Lab" },
@@ -58,7 +58,7 @@ export function SiteHeader() {
           href="/"
           className="font-display text-base font-semibold tracking-tight"
         >
-          {displayName}
+          {site.shortName}
           <span className="text-accent">.</span>
         </Link>
 
