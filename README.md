@@ -62,6 +62,11 @@ the array and the section disappears.
 - `site.url` — set to the real domain before deploying. It is the base for the
   canonical URLs, the sitemap and the Open Graph tags.
 - `site.socials` — the GitHub entry has an empty `href` and is therefore hidden.
+- **Job title at Vocus** — the current one is inferred from the job description,
+  not from an offer letter. See the `TODO` on that role.
+- **Vocus achievements** — that entry is written as scope rather than results,
+  because the role started in July 2026. Swap in concrete, measurable outcomes
+  as they land, matching the style of the Globe Telecom entry.
 - `site.phone` — left empty deliberately. A mobile number on a public page
   mostly attracts spam; the CV carries it where it belongs. Fill it in if you
   want it shown, and add it to the footer.

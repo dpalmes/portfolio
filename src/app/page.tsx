@@ -25,7 +25,7 @@ export default function HomePage() {
         />
         <Container className="relative py-20 sm:py-28">
           <div className="max-w-2xl">
-            <Eyebrow>Java · Kafka · GCP · TypeScript</Eyebrow>
+            <Eyebrow>Java · Middleware · Kafka · Cloud</Eyebrow>
             <h1 className="text-4xl leading-[1.05] font-semibold sm:text-6xl">
               {displayName}
               <span className="text-accent">.</span>

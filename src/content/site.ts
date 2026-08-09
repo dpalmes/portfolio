@@ -61,13 +61,14 @@ export const site: Site = {
   surname: "Palmes",
   shortName: "Vince",
 
-  role: "Software engineer — backend systems and real-time data",
+  role: "Software engineer — backend Java, middleware and real-time data",
 
   intro:
-    "I build backend services and streaming data pipelines. For the past three years that has meant systems at Globe Telecom that carry subscriber data for more than 70 million people — Java and Quarkus microservices, Kafka pipelines, and the encryption and KYC plumbing underneath them.",
+    "I build backend services and integration layers for telecom systems. Four years of Java: enterprise middleware and SOAP/REST integration across BSS and OSS platforms at Vocus, and before that the Kafka pipelines and microservices at Globe Telecom that carried subscriber data for more than 70 million people.",
 
   bio: [
-    "I am a software engineer in Bay, Laguna, working on backend systems and real-time data at Globe Telecom. Most of what I do is unglamorous and load-bearing: moving subscriber records between Snowflake, Aerospike and cloud storage without losing any, resolving queued messages fast enough that a promo notification is still worth sending, encrypting things that must stay encrypted.",
+    "I am a software engineer in Bay, Laguna, working on enterprise Java and systems integration for Vocus through Tech Mahindra. The work sits in the middle of things: middleware and web-service integration between billing, provisioning and network platforms, across the whole lifecycle from interpreting a requirement to supporting it in production.",
+    "Before that I spent nearly four years at Globe Telecom on backend and data engineering — moving subscriber records between Snowflake, Aerospike and cloud storage without losing any, resolving queued messages fast enough that a promo notification was still worth sending, encrypting things that had to stay encrypted.",
     "Working at that scale teaches you to distrust code you cannot check. A pipeline that is subtly wrong about 70 million records is worse than one that is loudly broken, so I have ended up caring a great deal about the boundary between logic you can test and infrastructure you can only observe.",
     "The demos on this site come out of the same instinct, applied somewhere less serious. Pitch detection and step sequencing are real-time problems with checkable answers: a tuner is either reporting the right note or it is not, and a beat either lands on time or it does not. Building them from the algorithms up, with the logic kept away from the browser so it could be tested properly, was the point.",
   ],
@@ -86,11 +87,30 @@ export const site: Site = {
 
   roles: [
     {
+      // TODO: confirm your actual job title at Vocus — this one is inferred
+      // from the job description rather than taken from an offer letter.
+      title: "Software Engineer — Java / Middleware",
+      organisation: "Vocus (via Tech Mahindra)",
+      period: "Jul 2026 – Present",
+      summary:
+        "Enterprise Java and systems integration for a telecom operator: middleware between BSS, OSS and product platforms, across the full lifecycle from interpreting a requirement through development and testing to production support.",
+      // Deliberately written as scope rather than achievements — this role
+      // started in July 2026. Replace these with concrete, measurable results
+      // as they land, the way the Globe entry below reads.
+      highlights: [
+        "Core Java middleware — EJB, JPA and Hibernate, built with Maven.",
+        "Systems integration over SOAP and REST web services between BSS, OSS and product platforms.",
+        "Full SDLC in an Agile team: analysis, development, automated testing, profiling, deployment and operational support.",
+        "Technical and process documentation, including design specifications.",
+        "Works across testing, product, network operations and project management teams.",
+      ],
+    },
+    {
       // Non-breaking space before the slash so a line break never leaves the
       // "/" stranded at the start of the next line.
       title: "Java Developer / Data Engineer",
       organisation: "Globe Telecom",
-      period: "Sep 2022 – Present",
+      period: "Sep 2022 – Jul 2026",
       summary:
         "Backend and data engineering on nationwide subscriber systems, from SIM registration and KYC through to the real-time pipelines that feed promotions and business intelligence.",
       highlights: [
@@ -136,7 +156,11 @@ export const site: Site = {
         "Java",
         "Spring Boot",
         "Quarkus",
+        "EJB",
+        "JPA",
+        "Hibernate",
         "Apache Camel",
+        "Maven",
         "Python",
         "TypeScript",
         "R",
@@ -144,9 +168,11 @@ export const site: Site = {
       ],
     },
     {
-      label: "Data & messaging",
+      label: "Integration & messaging",
       items: [
         "Kafka",
+        "REST",
+        "SOAP",
         "SQL",
         "Aerospike",
         "Snowflake",
