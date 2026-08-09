@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowIcon, ButtonLink, Container, Eyebrow, Tag } from "@/components/ui";
-import { getProject, projects } from "@/content/projects";
+import { allProjects, getProject } from "@/content/projects";
 
 export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+  return allProjects.map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata(
@@ -30,8 +30,8 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
   const project = getProject(slug);
   if (!project) notFound();
 
-  const index = projects.findIndex((item) => item.slug === slug);
-  const next = projects[(index + 1) % projects.length];
+  const index = allProjects.findIndex((item) => item.slug === slug);
+  const next = allProjects[(index + 1) % allProjects.length];
 
   return (
     <article className="py-16 sm:py-20">
@@ -58,12 +58,30 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
             ))}
           </ul>
 
-          <div className="mt-8">
-            <ButtonLink href={project.demoHref}>
-              Open the demo
-              <ArrowIcon />
-            </ButtonLink>
-          </div>
+          {project.demoHref ? (
+            <div className="mt-8">
+              <ButtonLink href={project.demoHref}>
+                Open the demo
+                <ArrowIcon />
+              </ButtonLink>
+            </div>
+          ) : project.repo ? (
+            <p className="mt-8 font-mono text-sm text-ink-muted">
+              Repository:{" "}
+              {project.repoHref ? (
+                <a
+                  href={project.repoHref}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="text-accent underline decoration-line underline-offset-4"
+                >
+                  {project.repo}
+                </a>
+              ) : (
+                <span className="text-ink">{project.repo}</span>
+              )}
+            </p>
+          ) : null}
         </header>
 
         <section className="mt-14 max-w-3xl border-y border-line py-8">

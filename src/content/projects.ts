@@ -7,6 +7,7 @@
  * delete them.
  */
 
+import { backendProjects } from "./backend-projects";
 import { stats } from "./stats";
 
 export interface CaseStudySection {
@@ -16,15 +17,33 @@ export interface CaseStudySection {
   note?: string;
 }
 
+export type ProjectKind = "backend" | "lab";
+
 export interface Project {
   slug: string;
   title: string;
   tagline: string;
+  /**
+   * Backend work runs on a server and is read as code; lab work runs in the
+   * browser and is read by pressing buttons. The distinction drives what the
+   * cards offer and how the pages are ordered.
+   */
+  kind: ProjectKind;
   /** Short label for the card, e.g. "Web Audio · DSP". */
   domain: string;
   stack: string[];
-  /** Route to the live demo. */
-  demoHref: string;
+  /** Route to the live demo, for anything that has one. */
+  demoHref?: string;
+  /**
+   * Where the code lives.
+   *
+   * TODO: replace these with GitHub URLs once the repositories are pushed —
+   * `repoHref` turns the label into a link when it is set.
+   */
+  repo?: string;
+  repoHref?: string;
+  /** Test count for the repository, shown on the case study. */
+  testCount?: number;
   /** One-paragraph summary for the card. */
   summary: string;
   /** Three or four bullets, the bit people actually read. */
@@ -37,6 +56,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     slug: "tuner",
+    kind: "lab",
     title: "Tuner",
     tagline: "Real-time pitch detection from the microphone",
     domain: "Web Audio · DSP",
@@ -87,6 +107,7 @@ export const projects: Project[] = [
   },
   {
     slug: "sequencer",
+    kind: "lab",
     title: "Sequencer",
     tagline: "Sample-accurate drum machine with synthesised voices",
     domain: "Web Audio · Timing",
@@ -140,6 +161,7 @@ export const projects: Project[] = [
   },
   {
     slug: "fretboard",
+    kind: "lab",
     title: "Fretboard",
     tagline: "Chord shapes derived, not tabulated",
     domain: "Search · Music theory",
@@ -186,8 +208,20 @@ export const projects: Project[] = [
   },
 ];
 
+/** Lab demos, in the order they appear on /lab. */
+export const labProjects = projects;
+
+/**
+ * Everything, backend work first.
+ *
+ * The ordering is the point: someone hiring a Java engineer should meet the
+ * Java work before the audio demos, however much more fun the demos are to
+ * click on.
+ */
+export const allProjects: Project[] = [...backendProjects, ...projects];
+
 export function getProject(slug: string): Project | undefined {
-  return projects.find((project) => project.slug === slug);
+  return allProjects.find((project) => project.slug === slug);
 }
 
 /**

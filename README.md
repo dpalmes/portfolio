@@ -1,14 +1,23 @@
 # Portfolio
 
-A personal portfolio site whose centrepieces are three interactive audio demos,
-each backed by an algorithm written from scratch and covered by unit tests.
+Dann Vincent Palmes — software engineer, backend Java and real-time data.
 
-- **Tuner** — real-time pitch detection from the microphone, using a from-scratch
-  implementation of the YIN algorithm.
-- **Sequencer** — a step sequencer with sample-accurate, drift-free timing and
-  drums synthesised from oscillators and filtered noise.
-- **Fretboard** — chord fingerings derived by searching the neck under physical
-  constraints, in any tuning, with no chord dictionary.
+The site is a Next.js application, and it is also one of the things it presents.
+Alongside it are three Java backend repositories, each with its own case study
+here:
+
+| Repository | What it demonstrates | Tests |
+|---|---|---|
+| [`stream-processor`](../stream-processor) | Kafka Streams: event-time windowing, de-duplication, dead-lettering | 23 |
+| [`integration-gateway`](../integration-gateway) | Apache Camel: REST-to-SOAP middleware, retry policy, idempotency | 26 |
+| [`secure-api`](../secure-api) | Spring Security: object-level authorization, field encryption, rate limiting | 38 |
+
+And three interactive audio demos in this repository, each backed by an
+algorithm written from scratch and covered by unit tests:
+
+- **Tuner** — real-time pitch detection using a from-scratch YIN implementation
+- **Sequencer** — a step sequencer with sample-accurate, drift-free timing
+- **Fretboard** — chord fingerings derived by searching the neck, in any tuning
 
 Next.js 16, React 19, TypeScript, Tailwind 4, Vitest. No audio or music-theory
 dependencies — that is the point.

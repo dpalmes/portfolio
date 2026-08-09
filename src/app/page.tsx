@@ -9,9 +9,10 @@ import {
   Stat,
   Tag,
 } from "@/components/ui";
-import { externalProjects, projects } from "@/content/projects";
+import { externalProjects, labProjects } from "@/content/projects";
+import { backendProjects } from "@/content/backend-projects";
 import { activeSocials, displayName, site } from "@/content/site";
-import { stats } from "@/content/stats";
+import { totalTests } from "@/content/stats";
 
 export default function HomePage() {
   const [currentRole] = site.roles;
@@ -113,9 +114,31 @@ export default function HomePage() {
       <section className="py-20 sm:py-24">
         <Container>
           <SectionHeading
+            eyebrow="Backend"
+            title="Java services, built to be tested"
+            description="Streaming, middleware and API security — the same problems as the day job, taken apart in repositories you can build and run. Each one is covered by a suite that needs no broker, no backend and no Docker."
+            action={
+              <ButtonLink href="/work" variant="secondary">
+                All case studies
+                <ArrowIcon />
+              </ButtonLink>
+            }
+          />
+
+          <div className="grid gap-5 md:grid-cols-3">
+            {backendProjects.map((project) => (
+              <ProjectCard key={project.slug} project={project} />
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-line py-20 sm:py-24">
+        <Container>
+          <SectionHeading
             eyebrow="Lab"
-            title="Three things that had to be built, not installed"
-            description="Real-time problems, taken apart in the browser: pitch detection, sample-accurate scheduling, and chord-shape search. Each runs on a tested, dependency-free core, and the case studies explain the algorithm behind it."
+            title="And three that run in your browser"
+            description="Pitch detection, sample-accurate scheduling and chord-shape search, written from the algorithms up with no audio libraries. Same instinct as the backend work, somewhere you can hear the result."
             action={
               <ButtonLink href="/lab" variant="secondary">
                 All demos
@@ -127,7 +150,7 @@ export default function HomePage() {
           <HeroCurve className="mb-10" />
 
           <div className="grid gap-5 md:grid-cols-3">
-            {projects.map((project) => (
+            {labProjects.map((project) => (
               <ProjectCard key={project.slug} project={project} />
             ))}
           </div>
@@ -140,13 +163,13 @@ export default function HomePage() {
           <dl className="mt-6 grid grid-cols-2 gap-8 sm:grid-cols-4">
             <Stat
               label="Tests"
-              value={stats.tests}
-              hint="Pure logic, run in Node — no browser needed"
+              value={totalTests}
+              hint="Across four repositories, Java and TypeScript"
             />
             <Stat
-              label="Audio deps"
-              value={stats.audioDependencies}
-              hint="YIN, scheduling and theory written from scratch"
+              label="Infrastructure to run them"
+              value="None"
+              hint="No broker, no database, no Docker, no backend"
             />
             <Stat
               label="Pitch accuracy"
@@ -161,12 +184,15 @@ export default function HomePage() {
           </dl>
 
           <p className="mt-10 max-w-2xl text-sm leading-relaxed text-ink-muted">
-            The interesting logic here is deliberately kept away from the DOM.
-            Pitch detection takes an array of samples and a sample rate; the
-            sequencer&rsquo;s clock is told what time it is and asked what is
-            due. Neither knows the browser exists, which is why both can be
-            tested exhaustively in a fifth of a second instead of driven through
-            a headless browser and hoped over.
+            The same rule runs through all of it: keep the logic that matters
+            away from the infrastructure it happens to run on. A Kafka topology
+            is a pure function from config to a topology object, so the whole
+            pipeline runs under a test driver with event time controlled to the
+            millisecond. Pitch detection takes an array of samples and a sample
+            rate. Neither knows what it is deployed into, which is why the
+            awkward cases — a duplicate delivery, an event arriving after its
+            window closed, a backend that fails twice and then recovers — are
+            ordinary unit tests instead of a QA exercise.
           </p>
         </Container>
       </section>
