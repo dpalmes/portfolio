@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { ProjectCard } from "@/components/project-card";
 import { Container, Eyebrow } from "@/components/ui";
 import { labProjects } from "@/content/projects";
+import { productProjects } from "@/content/product-projects";
+import { backendProjects } from "@/content/backend-projects";
 
 export const metadata: Metadata = {
   title: "Lab",
@@ -18,17 +20,49 @@ export default function LabPage() {
           Things you can play with
         </h1>
         <p className="mt-4 text-lg leading-relaxed text-ink-muted">
-          Everything here runs locally in your browser. The tuner needs
-          microphone permission, which is requested only when you press start,
-          and the audio never leaves the page.
+          Everything here runs in your browser, except the live services, which
+          call a deployed backend. The tuner needs microphone permission,
+          requested only when you press start, and the audio never leaves the
+          page.
         </p>
       </div>
 
-      <div className="mt-12 grid gap-5 md:grid-cols-3">
-        {labProjects.map((project) => (
-          <ProjectCard key={project.slug} project={project} />
-        ))}
-      </div>
+      <section className="mt-12">
+        <h2 className="font-mono text-xs tracking-[0.14em] text-accent uppercase">
+          Products
+        </h2>
+        <div className="mt-4 grid gap-5 md:grid-cols-3">
+          {productProjects.map((project) => (
+            <ProjectCard key={project.slug} project={project} />
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-12">
+        <h2 className="font-mono text-xs tracking-[0.14em] text-accent uppercase">
+          Browser audio
+        </h2>
+        <div className="mt-4 grid gap-5 md:grid-cols-3">
+          {labProjects.map((project) => (
+            <ProjectCard key={project.slug} project={project} />
+          ))}
+        </div>
+      </section>
+
+      {backendProjects.some((project) => project.demoHref) ? (
+        <section className="mt-12">
+          <h2 className="font-mono text-xs tracking-[0.14em] text-accent uppercase">
+            Live services
+          </h2>
+          <div className="mt-4 grid gap-5 md:grid-cols-3">
+            {backendProjects
+              .filter((project) => project.demoHref)
+              .map((project) => (
+                <ProjectCard key={project.slug} project={project} />
+              ))}
+          </div>
+        </section>
+      ) : null}
 
       <p className="mt-10 text-sm text-ink-muted">
         Audio requires a user gesture to start, so nothing plays until you press

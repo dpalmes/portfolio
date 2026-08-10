@@ -7,11 +7,12 @@ import {
   type Project,
 } from "@/content/projects";
 import { backendProjects } from "@/content/backend-projects";
+import { productProjects } from "@/content/product-projects";
 
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Case studies on Kafka stream processing, SOAP/REST middleware, API security, and a set of browser audio demos built from the algorithms up.",
+    "Case studies on Kafka stream processing, SOAP/REST middleware, API security, three product builds, and a set of browser audio demos built from the algorithms up.",
 };
 
 export default function WorkPage() {
@@ -36,11 +37,19 @@ export default function WorkPage() {
       />
 
       <Section
+        eyebrow="Products"
+        title="Booking, menus and inventory"
+        description="The half of a product worth building carefully — the rules that decide what can be sold and what happens when the answer is no."
+        projects={productProjects}
+        startIndex={backendProjects.length}
+      />
+
+      <Section
         eyebrow="Lab"
         title="Browser audio"
         description="Real-time problems taken apart in the browser, where you can hear the result."
         projects={labProjects}
-        startIndex={backendProjects.length}
+        startIndex={backendProjects.length + productProjects.length}
       />
 
       {externalProjects.length > 0 ? (

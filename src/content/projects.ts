@@ -8,6 +8,7 @@
  */
 
 import { backendProjects } from "./backend-projects";
+import { productProjects } from "./product-projects";
 import { stats } from "./stats";
 
 export interface CaseStudySection {
@@ -17,7 +18,7 @@ export interface CaseStudySection {
   note?: string;
 }
 
-export type ProjectKind = "backend" | "lab";
+export type ProjectKind = "backend" | "product" | "lab";
 
 export interface Project {
   slug: string;
@@ -218,7 +219,11 @@ export const labProjects = projects;
  * Java work before the audio demos, however much more fun the demos are to
  * click on.
  */
-export const allProjects: Project[] = [...backendProjects, ...projects];
+export const allProjects: Project[] = [
+  ...backendProjects,
+  ...productProjects,
+  ...projects,
+];
 
 export function getProject(slug: string): Project | undefined {
   return allProjects.find((project) => project.slug === slug);

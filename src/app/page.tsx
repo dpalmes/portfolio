@@ -11,6 +11,7 @@ import {
 } from "@/components/ui";
 import { externalProjects, labProjects } from "@/content/projects";
 import { backendProjects } from "@/content/backend-projects";
+import { productProjects } from "@/content/product-projects";
 import { activeSocials, displayName, site } from "@/content/site";
 import { totalTests } from "@/content/stats";
 
@@ -136,8 +137,30 @@ export default function HomePage() {
       <section className="border-t border-line py-20 sm:py-24">
         <Container>
           <SectionHeading
+            eyebrow="Products"
+            title="Three products, built from the rules outward"
+            description="A resort booking engine, a coffee shop's reservations and menu, and a store's inventory and till. Each one is the half of the product worth building carefully — the rules that decide what can be sold, and what happens when the answer is no."
+            action={
+              <ButtonLink href="/lab" variant="secondary">
+                Try them
+                <ArrowIcon />
+              </ButtonLink>
+            }
+          />
+
+          <div className="grid gap-5 md:grid-cols-3">
+            {productProjects.map((project) => (
+              <ProjectCard key={project.slug} project={project} />
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-line py-20 sm:py-24">
+        <Container>
+          <SectionHeading
             eyebrow="Lab"
-            title="And three that run in your browser"
+            title="And three that run on algorithms"
             description="Pitch detection, sample-accurate scheduling and chord-shape search, written from the algorithms up with no audio libraries. Same instinct as the backend work, somewhere you can hear the result."
             action={
               <ButtonLink href="/lab" variant="secondary">
