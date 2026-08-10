@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowIcon, ButtonLink, Container, Eyebrow, Tag } from "@/components/ui";
 import { allProjects, getProject } from "@/content/projects";
+import { transcripts } from "@/content/transcripts";
+import { TranscriptView } from "@/components/transcript";
 
 export function generateStaticParams() {
   return allProjects.map((project) => ({ slug: project.slug }));
@@ -124,6 +126,21 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
             </section>
           ))}
         </div>
+
+        {transcripts[project.slug] ? (
+          <section className="mt-14 max-w-3xl">
+            <h2 className="font-display text-2xl font-semibold">
+              Seeing it run
+            </h2>
+            <p className="mt-3 mb-6 leading-relaxed text-ink-muted">
+              Captured from an actual run, not an illustration.
+              {project.demoHref
+                ? " The live version is a click away above."
+                : " The repository has the script that produced it."}
+            </p>
+            <TranscriptView transcript={transcripts[project.slug]} />
+          </section>
+        ) : null}
 
         <section className="mt-14 max-w-3xl">
           <h2 className="font-mono text-xs tracking-[0.14em] text-accent uppercase">

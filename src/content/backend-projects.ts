@@ -136,6 +136,7 @@ export const backendProjects: Project[] = [
     domain: "API security · Spring Security",
     stack: ["Java 21", "Spring Security", "OAuth2 / JWT", "AES-GCM"],
     repo: "secure-api",
+    demoHref: "/lab/secure-api",
     testCount: stats.secureApiTests,
     summary:
       "A subscriber API carrying personal data, with JWT authentication, object-level authorization, field-level encryption, per-caller rate limiting and an audit trail that records refusals as well as successes.",
@@ -144,7 +145,7 @@ export const backendProjects: Project[] = [
       "A foreign record and a missing one return byte-identical responses, so refusals cannot confirm which ids exist",
       "National IDs encrypted per field with AES-256-GCM, bound to the record so ciphertext cannot be moved between rows",
       `${stats.secureApiTests} tests, including a token bucket driven by an injected clock so nothing sleeps`,
-      "Runs standalone, with a script that mints tokens and walks the security behaviour",
+      "Deployed and callable — the lab page runs this walkthrough against the live service",
     ],
     sources: [
       "src/main/java/com/dvpalmes/secureapi/service/SubscriberService.java",

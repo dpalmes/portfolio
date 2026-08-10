@@ -66,6 +66,23 @@ Teacher**. Those two were written from what was visible in the neighbouring
 repositories and are marked "In progress" — correct them, add links, or delete
 the array and the section disappears.
 
+### The live API demo
+
+`/lab/secure-api` calls a deployed instance of the `secure-api` service and
+shows the real HTTP traffic. Point it at one by setting, in `.env.local`:
+
+```
+NEXT_PUBLIC_SECURE_API_URL=https://your-service-url
+```
+
+and set `SECURITY_CORS_ALLOWED_ORIGINS` on the service to this site's origin —
+both sides have to name each other or the browser refuses the call. See
+`secure-api/deploy/README.md`.
+
+Without that variable the page explains that no service is configured and the
+case study still shows a captured transcript, so nothing looks broken when the
+deployment is asleep or gone.
+
 ### Still to fill in
 
 - `site.url` — set to the real domain before deploying. It is the base for the
