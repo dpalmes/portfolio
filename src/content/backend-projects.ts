@@ -26,6 +26,7 @@ export const backendProjects: Project[] = [
       "Suppression until window close, so consumers get one answer per window instead of a stream of partial ones",
       "Poison payloads routed to a dead-letter topic rather than killing the stream thread",
       `${stats.streamProcessorTests} tests drive the real topology through TopologyTestDriver — no broker, no Docker, event time controlled to the millisecond`,
+      "`docker compose up` and one script runs the whole scenario against a real broker",
     ],
     sources: [
       "src/main/java/com/dvpalmes/streaming/topology/SubscriberUsageTopology.java",
@@ -88,6 +89,7 @@ export const backendProjects: Project[] = [
       "Idempotent by request id, and a duplicate gets an answer rather than being silently dropped",
       "SOAP envelopes escaped against XML injection; responses parsed with DTDs disabled against XXE",
       `${stats.integrationGatewayTests} tests against a WireMock backend that can be told to fail twice and then recover`,
+      "A stub profile runs it end to end with no Docker and no external services",
     ],
     sources: [
       "src/main/java/com/dvpalmes/gateway/route/ActivationRoutes.java",
@@ -142,6 +144,7 @@ export const backendProjects: Project[] = [
       "A foreign record and a missing one return byte-identical responses, so refusals cannot confirm which ids exist",
       "National IDs encrypted per field with AES-256-GCM, bound to the record so ciphertext cannot be moved between rows",
       `${stats.secureApiTests} tests, including a token bucket driven by an injected clock so nothing sleeps`,
+      "Runs standalone, with a script that mints tokens and walks the security behaviour",
     ],
     sources: [
       "src/main/java/com/dvpalmes/secureapi/service/SubscriberService.java",
