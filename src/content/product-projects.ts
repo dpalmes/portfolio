@@ -175,4 +175,66 @@ export const productProjects: Project[] = [
       },
     ],
   },
+  {
+    slug: "crm",
+    kind: "product",
+    title: "CRM",
+    tagline: "Knowing that three records are one person",
+    domain: "Product · Identity · Consent",
+    stack: ["TypeScript", "React", "Vitest"],
+    demoHref: "/lab/crm",
+    testCount: stats.crmTests,
+    summary:
+      "One CRM across the resort, the coffee shop and the store. Scored identity resolution rather than a customer table, segments derived from transactions rather than tags, and consent that has to be proved before anybody can be contacted.",
+    highlights: [
+      "Matching returns a score and a reason, and only a shared phone or email can clear the automatic threshold",
+      "Two people who share a name are flagged for review and never merged automatically",
+      "Segments are recomputed from transactions, so nobody's opinion of a customer can go stale",
+      "Consent defaults to no and is stored as events, so a withdrawal can be evidenced rather than asserted",
+    ],
+    sources: [
+      "src/lib/crm/identity.ts",
+      "src/lib/crm/segments.ts",
+      "src/lib/crm/consent.ts",
+      "src/lib/crm/crm.test.ts",
+    ],
+    sections: [
+      {
+        heading: "The customer table is not the hard part",
+        body: [
+          "Storing customers is a table with a name and a phone number in it. The hard part is knowing that the Ana Cruz who booked a villa on 0917 123 4567 is the same person as the ana dela cruz who ordered coffee on +63 917 123 4567 and the Ana Dela Cruz who bought groceries with an email address.",
+          "Until those three records are one, her lifetime value is split three ways and none of the three looks like a customer worth keeping. She gets the same campaign three times, and the resort has no idea she is also a regular at the coffee shop.",
+        ],
+      },
+      {
+        heading: "Wrong in both directions",
+        body: [
+          "Duplicates are the obvious failure, and the one everybody tries to fix. The less obvious failure is worse: over-merging welds two real people into one record, and one of them starts seeing the other's history. That is a data-protection incident, not a tidy-up.",
+          "So matching returns a score and a plain-language reason rather than a boolean, and the threshold for merging automatically can only be reached by evidence that identifies a person — a phone number or an email address. A similar name is a hint. There are a great many people called Maria Santos, and two of them in the demo score high enough to review and never high enough to merge.",
+        ],
+        note: "A shared phone with a very different name is also held back for review. It is usually a household handset or a shop's landline, and merging Roberto and Elena Bautista because they answer the same phone would be exactly the mistake the threshold exists to prevent.",
+      },
+      {
+        heading: "Normalising the things that identify people",
+        body: [
+          "The same Philippine mobile number is written 0917 123 4567, +63 917 123 4567, 63917-123-4567 and 9171234567 by four different people on four different forms. Comparing the strings finds nothing; reducing them all to one form finds everybody. Anything that does not fit a recognised shape returns nothing rather than a guess, because a guess merges strangers who happen to share digits.",
+          "Email normalisation stops at lowercasing and trimming. Stripping Gmail's dots and plus-tags is correct for Gmail and wrong for providers that treat them as distinct, and a rule that is wrong for one provider merges two people who have never met.",
+        ],
+      },
+      {
+        heading: "Segments nobody has to maintain",
+        body: [
+          "Recency, frequency and monetary value, computed from the transactions that already exist. Nobody tags a customer as loyal, so nobody's opinion of them can drift out of date — the segment is a function of what they actually did, recalculated every time it is asked for.",
+          "The ordering encodes a judgement: recency dominates. Somebody who spent a fortune and has not been seen for a year is a lapsed customer with a good history, not a champion. Getting that the wrong way round is how a message thanking somebody for their loyalty lands on a person who left months ago.",
+        ],
+      },
+      {
+        heading: "Consent has to be proved, not assumed",
+        body: [
+          "A CRM that can segment a customer but cannot say whether it may email them is a liability. Consent is stored as events with timestamps and a source, so a withdrawal is a fact that can be produced — where a boolean somebody flipped is only an assertion.",
+          "The check starts from no. A customer with no record on file cannot be marketed to by accident, channels are independent so unsubscribing from SMS leaves email alone, and transactional messages are exempt because a booking confirmation is not marketing. The filter is a function rather than a rule in the interface, because a consent rule enforced only in the UI is one that will be bypassed by the first export to a spreadsheet.",
+        ],
+      },
+    ],
+  },
 ];

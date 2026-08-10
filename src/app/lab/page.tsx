@@ -31,7 +31,7 @@ export default function LabPage() {
         <h2 className="font-mono text-xs tracking-[0.14em] text-accent uppercase">
           Products
         </h2>
-        <div className="mt-4 grid gap-5 md:grid-cols-3">
+        <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {productProjects.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}

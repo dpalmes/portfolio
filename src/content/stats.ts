@@ -8,7 +8,7 @@
 
 export const stats = {
   /** Test cases in this repository — the audio and music-theory work. */
-  tests: 296,
+  tests: 351,
   /** Tests covering the pitch detector specifically. */
   pitchTests: 33,
   /** Tests covering the sequencer's timing. */
@@ -22,6 +22,7 @@ export const stats = {
   bookingTests: 33,
   diningTests: 31,
   inventoryTests: 33,
+  crmTests: 55,
 
   /** Tests across the three Java backend repositories. */
   javaTests: 87,

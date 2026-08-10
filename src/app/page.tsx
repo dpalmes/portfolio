@@ -148,7 +148,7 @@ export default function HomePage() {
             }
           />
 
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {productProjects.map((project) => (
               <ProjectCard key={project.slug} project={project} />
             ))}
