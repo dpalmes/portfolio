@@ -12,15 +12,25 @@ here:
 | [`integration-gateway`](../integration-gateway) | Apache Camel: REST-to-SOAP middleware, retry policy, idempotency | 26 |
 | [`secure-api`](../secure-api) | Spring Security: object-level authorization, field encryption, rate limiting | 38 |
 
-And three interactive audio demos in this repository, each backed by an
-algorithm written from scratch and covered by unit tests:
+This repository also holds seven interactive demos, each backed by a tested
+engine and running entirely in the browser:
 
-- **Tuner** — real-time pitch detection using a from-scratch YIN implementation
-- **Sequencer** — a step sequencer with sample-accurate, drift-free timing
+**Products** — the half of a product worth building carefully, which is the
+rules rather than the screens:
+
+- **Resort** — per-night availability across room types, seasonal pricing
+- **Coffee shop** — reservations with turn times and table combining, plus a menu
+- **Store** — stock derived from movements, weighted-average cost, VAT-inclusive till
+- **CRM** — identity resolution across all three, segments, and consent
+
+**Lab** — real-time problems taken apart, written from the algorithms up with no
+audio libraries:
+
+- **Tuner** — pitch detection using a from-scratch YIN implementation
+- **Sequencer** — sample-accurate, drift-free timing
 - **Fretboard** — chord fingerings derived by searching the neck, in any tuning
 
-Next.js 16, React 19, TypeScript, Tailwind 4, Vitest. No audio or music-theory
-dependencies — that is the point.
+Next.js 16, React 19, TypeScript, Tailwind 4, Vitest.
 
 ## Getting started
 
@@ -60,28 +70,12 @@ education, email and social links. Experience and education come from the CV.
 Any section backed by an empty array simply does not render, and social links
 with an empty `href` are hidden, so trimming is safe.
 
-**`src/content/projects.ts`** — the three case studies, plus an
+**`src/content/projects.ts`** — the lab case studies, with the backend and
+product ones in `backend-projects.ts` and `product-projects.ts`, plus an
 `externalProjects` array holding entries for **BeatRoad** and **AI Guitar
 Teacher**. Those two were written from what was visible in the neighbouring
 repositories and are marked "In progress" — correct them, add links, or delete
 the array and the section disappears.
-
-### The live API demo
-
-`/lab/secure-api` calls a deployed instance of the `secure-api` service and
-shows the real HTTP traffic. Point it at one by setting, in `.env.local`:
-
-```
-NEXT_PUBLIC_SECURE_API_URL=https://your-service-url
-```
-
-and set `SECURITY_CORS_ALLOWED_ORIGINS` on the service to this site's origin —
-both sides have to name each other or the browser refuses the call. See
-`secure-api/deploy/README.md`.
-
-Without that variable the page explains that no service is configured and the
-case study still shows a captured transcript, so nothing looks broken when the
-deployment is asleep or gone.
 
 ### Still to fill in
 
@@ -121,8 +115,14 @@ src/
       scales.ts       Scale definitions, modes, degree labelling
       chords.ts       Chord construction and recognition
       fretboard.ts    Tunings, geometry, chord-shape search
+    booking/          Stay dates, per-night availability, seasonal pricing
+    dining/           Turn times, table allocation, menu modifiers
+    inventory/        Stock ledger, weighted-average cost, VAT-inclusive billing
+    crm/              Identity resolution, RFM segments, consent
+    money.ts          Integer centavos — the only place rounding happens
   components/
-    lab/              The three demos
+    lab/              The audio demos
+    products/         The product demos
     ui.tsx            Shared primitives
   content/            All copy and configuration
   app/                Routes
