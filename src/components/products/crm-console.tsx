@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Button } from "@/components/ui";
 import { canContact, consentStates, contactable, mergeConsent } from "@/lib/crm/consent";
 import {
   AUTO_MERGE_THRESHOLD,

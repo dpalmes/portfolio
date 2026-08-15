@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
-import { Button } from "@/components/ui";
 import { priceLine, type OrderLine } from "@/lib/dining/menu";
 import {
   formatMinute,

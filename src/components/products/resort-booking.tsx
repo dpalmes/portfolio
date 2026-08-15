@@ -36,15 +36,10 @@ export function ResortBooking() {
   >(null);
 
   const roomType = ROOM_TYPES.find((room) => room.id === roomTypeId)!;
-  const stay = { checkIn, checkOut };
+  const stay = useMemo(() => ({ checkIn, checkOut }), [checkIn, checkOut]);
   const nightCount = nights(stay);
 
-  const availability = useMemo(
-    () => checkAvailability(roomType, stay, bookings),
-    [roomType, checkIn, checkOut, bookings],
-  );
-
-  const priced = useMemo(() => quote(stay, RATE_PLAN), [checkIn, checkOut]);
+  const priced = useMemo(() => quote(stay, RATE_PLAN), [stay]);
 
   const calendar = useMemo(
     () =>
