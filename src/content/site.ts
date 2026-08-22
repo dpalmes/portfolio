@@ -64,10 +64,10 @@ export const site: Site = {
   role: "Software engineer — backend Java, middleware and real-time data",
 
   intro:
-    "I build backend services and integration layers for telecom systems. Four years of Java: enterprise middleware and SOAP/REST integration across BSS and OSS platforms at Vocus, and before that the Kafka pipelines and microservices at Globe Telecom that carried subscriber data for more than 70 million people.",
+    "I build backend services and integration layers for telecom systems. Four years of Java: at Vocus, the middleware carrying orders between Australia\u2019s national broadband network and the providers reselling it, and before that the Kafka pipelines and microservices at Globe Telecom that carried subscriber data for more than 70 million people.",
 
   bio: [
-    "I am a software engineer in Bay, Laguna, working on enterprise Java and systems integration for Vocus through Tech Mahindra. The work sits in the middle of things: middleware and web-service integration between billing, provisioning and network platforms, across the whole lifecycle from interpreting a requirement to supporting it in production.",
+    "I am a software engineer in Bay, Laguna, working on enterprise Java and systems integration for Vocus through Tech Mahindra. The work sits in the middle of things, literally: the middleware between NBN \u2014 the government-owned network most Australian broadband runs over \u2014 and the retail providers reselling it. An order has to cross an organisational boundary intact, and when it does not, somebody has to be able to say which side it stopped on.",
     "Before that I spent nearly four years at Globe Telecom on backend and data engineering — moving subscriber records between Snowflake, Aerospike and cloud storage without losing any, resolving queued messages fast enough that a promo notification was still worth sending, encrypting things that had to stay encrypted.",
     "Working at that scale teaches you to distrust code you cannot check. A pipeline that is subtly wrong about 70 million records is worse than one that is loudly broken, so I have ended up caring a great deal about the boundary between logic you can test and infrastructure you can only observe.",
     "The demos on this site come out of the same instinct, applied somewhere less serious. Pitch detection and step sequencing are real-time problems with checkable answers: a tuner is either reporting the right note or it is not, and a beat either lands on time or it does not. Building them from the algorithms up, with the logic kept away from the browser so it could be tested properly, was the point.",
@@ -86,21 +86,21 @@ export const site: Site = {
 
   roles: [
     {
-      // TODO: confirm your actual job title at Vocus — this one is inferred
-      // from the job description rather than taken from an offer letter.
       title: "Software Engineer — Java / Middleware",
       organisation: "Vocus (via Tech Mahindra)",
       period: "Jul 2026 – Present",
       summary:
-        "Enterprise Java and systems integration for a telecom operator: middleware between BSS, OSS and product platforms, across the full lifecycle from interpreting a requirement through development and testing to production support.",
-      // Deliberately written as scope rather than achievements — this role
-      // started in July 2026. Replace these with concrete, measurable results
-      // as they land, the way the Globe entry below reads.
+        "Middleware and web-service integration for Vocus's wholesale broadband business — the systems carrying orders between NBN, Australia's government-owned national network, and the retail providers reselling it — across the full lifecycle from interpreting a requirement through development and testing to production support.",
+      // Scope rather than measured results: this role started in July 2026.
+      // The shape of the work is accurate; add numbers — order volumes,
+      // throughput, the size of an incident avoided — as they become
+      // quotable, the way the Globe entry below reads.
       highlights: [
+        "Order and provisioning traffic in both directions: a reseller's order turned into a request NBN will accept, and NBN's response turned back into something the reseller's own systems can act on.",
+        "Integration over SOAP and REST across BSS, OSS and product platforms, exercised and debugged with SoapUI — the far end is somebody else's system, so most of the work is agreeing precisely what each side promises.",
         "Core Java middleware — EJB, JPA and Hibernate, built with Maven and deployed to JBoss/WildFly.",
-        "Systems integration over SOAP and REST web services between BSS, OSS and product platforms, exercised and debugged with SoapUI.",
-        "Full SDLC in an Agile team: analysis, development, automated testing, profiling, deployment and operational support, investigating data issues against SQL Server through SSMS.",
-        "Technical and process documentation, including design specifications.",
+        "Production support on that integration — tracing an order that stalled somewhere between the two sides and establishing which side it stalled on, working the data back through SQL Server in SSMS.",
+        "Full SDLC in an Agile team — analysis, development, automated testing, profiling, deployment and support — with design specifications and process documentation alongside it.",
         "Works across testing, product, network operations and project management teams.",
       ],
     },

@@ -244,19 +244,7 @@ export interface ExternalProject {
   href?: string;
 }
 
-export const externalProjects: ExternalProject[] = [
-  {
-    title: "BeatRoad",
-    description:
-      "A rhythm game for iOS. Notes are placed against a beat chart and driven by a music engine that keeps gameplay locked to the audio clock rather than the frame rate.",
-    stack: ["Swift", "SpriteKit", "AVFoundation"],
-    status: "In progress",
-  },
-  {
-    title: "AI Guitar Teacher",
-    description:
-      "A practice tool pairing lesson content with student accounts and progress tracking.",
-    stack: ["Next.js", "Supabase", "TypeScript"],
-    status: "In progress",
-  },
-];
+// Empty for now, so the "Also building" section does not render. Add entries
+// here to bring it back — BeatRoad and the guitar-teacher tool came out until
+// there is something worth pointing at.
+export const externalProjects: ExternalProject[] = [];
