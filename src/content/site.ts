@@ -56,6 +56,36 @@ export interface Site {
   location: string;
 }
 
+/**
+ * Your own domain, once you have one. Setting this wins over everything else,
+ * because a custom domain is a deliberate choice and a platform-generated URL
+ * is not.
+ */
+const CUSTOM_DOMAIN = "";
+
+/**
+ * The base for canonical URLs, the sitemap and the Open Graph tags.
+ *
+ * This is resolved rather than written down because getting it wrong is
+ * expensive and silent: a placeholder shipped to production tells every
+ * crawler that the canonical home of these pages is somewhere else, and
+ * nothing about the site looks broken while it happens.
+ *
+ * Vercel exposes the project's production domain to the build as
+ * VERCEL_PROJECT_PRODUCTION_URL, without a scheme, and points it at a custom
+ * domain once one is attached. Using it means the first deploy is already
+ * correct and stays correct.
+ */
+function resolveSiteUrl(): string {
+  if (CUSTOM_DOMAIN) return CUSTOM_DOMAIN;
+
+  const vercelDomain = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+  if (vercelDomain) return `https://${vercelDomain}`;
+
+  // Local development. Absolute because metadataBase demands one.
+  return "http://localhost:3000";
+}
+
 export const site: Site = {
   name: "Dann Vincent",
   surname: "Palmes",
@@ -198,9 +228,7 @@ export const site: Site = {
     },
   ],
 
-  // TODO: set this to your real domain before deploying. It is the base for
-  // canonical URLs, the sitemap and the Open Graph tags.
-  url: "https://example.com",
+  url: resolveSiteUrl(),
 
   location: "Bay, Laguna, Philippines",
 };
