@@ -18,6 +18,7 @@ export const backendProjects: Project[] = [
     domain: "Streaming · Kafka · Quarkus",
     stack: ["Java 21", "Kafka Streams", "Quarkus", "JUnit"],
     repo: "stream-processor",
+    repoHref: "https://github.com/dpalmes/stream-processor",
     testCount: stats.streamProcessorTests,
     summary:
       "A pipeline that parses raw usage events, de-duplicates redeliveries, aggregates volume per subscriber into event-time windows, raises threshold alerts, and dead-letters anything unusable. The whole topology is tested without a broker.",
@@ -81,6 +82,7 @@ export const backendProjects: Project[] = [
     domain: "Middleware · Camel · Spring Boot",
     stack: ["Java 21", "Apache Camel", "Spring Boot", "WireMock"],
     repo: "integration-gateway",
+    repoHref: "https://github.com/dpalmes/integration-gateway",
     testCount: stats.integrationGatewayTests,
     summary:
       "A middleware layer that gives callers one interface over two very different provisioning backends, and answers the questions a gateway exists for: what to retry, what to give up on, and what a caller gets back when the far end is down.",
@@ -136,6 +138,7 @@ export const backendProjects: Project[] = [
     domain: "API security · Spring Security",
     stack: ["Java 21", "Spring Security", "OAuth2 / JWT", "AES-GCM"],
     repo: "secure-api",
+    repoHref: "https://github.com/dpalmes/secure-api",
     testCount: stats.secureApiTests,
     summary:
       "A subscriber API carrying personal data, with JWT authentication, object-level authorization, field-level encryption, per-caller rate limiting and an audit trail that records refusals as well as successes.",

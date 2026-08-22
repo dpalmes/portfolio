@@ -81,8 +81,7 @@ export const site: Site = {
       label: "LinkedIn",
       href: "https://linkedin.com/in/dann-vincent-palmes-71245a207",
     },
-    // TODO: add your GitHub profile URL to show it in the header and footer.
-    { label: "GitHub", href: "" },
+    { label: "GitHub", href: "https://github.com/dpalmes" },
   ],
 
   roles: [
