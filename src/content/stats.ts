@@ -8,7 +8,7 @@
 
 export const stats = {
   /** Test cases in this repository — the audio and music-theory work. */
-  tests: 351,
+  tests: 355,
   /** Tests covering the pitch detector specifically. */
   pitchTests: 33,
   /** Tests covering the sequencer's timing. */
