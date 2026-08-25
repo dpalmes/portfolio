@@ -6,13 +6,14 @@ import {
   labProjects,
   type Project,
 } from "@/content/projects";
+import { automationProjects } from "@/content/automation-projects";
 import { backendProjects } from "@/content/backend-projects";
 import { productProjects } from "@/content/product-projects";
 
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Case studies on Kafka stream processing, SOAP/REST middleware, API security, three product builds, and a set of browser audio demos built from the algorithms up.",
+    "Case studies on Kafka stream processing, SOAP/REST middleware, API security, AI automation pipelines, three product builds, and a set of browser audio demos built from the algorithms up.",
 };
 
 export default function WorkPage() {
@@ -37,11 +38,19 @@ export default function WorkPage() {
       />
 
       <Section
+        eyebrow="Automation"
+        title="AI automation"
+        description="Language models put to work with engineering discipline — closed vocabularies, deterministic verification, and eval suites that measure the prompt instead of trusting it."
+        projects={automationProjects}
+        startIndex={backendProjects.length}
+      />
+
+      <Section
         eyebrow="Products"
         title="Booking, menus and inventory"
         description="The half of a product worth building carefully — the rules that decide what can be sold and what happens when the answer is no."
         projects={productProjects}
-        startIndex={backendProjects.length}
+        startIndex={backendProjects.length + automationProjects.length}
       />
 
       <Section
@@ -49,7 +58,7 @@ export default function WorkPage() {
         title="Browser audio"
         description="Real-time problems taken apart in the browser, where you can hear the result."
         projects={labProjects}
-        startIndex={backendProjects.length + productProjects.length}
+        startIndex={backendProjects.length + automationProjects.length + productProjects.length}
       />
 
       {externalProjects.length > 0 ? (

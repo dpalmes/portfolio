@@ -24,6 +24,11 @@ export const stats = {
   inventoryTests: 33,
   crmTests: 55,
 
+  /** Tests across the two AI-automation repositories. */
+  automationTests: 108,
+  extractionTests: 74,
+  triageTests: 34,
+
   /** Tests across the three Java backend repositories. */
   javaTests: 87,
   streamProcessorTests: 23,
@@ -32,4 +37,4 @@ export const stats = {
 } as const;
 
 /** Everything, across every repository. */
-export const totalTests = stats.tests + stats.javaTests;
+export const totalTests = stats.tests + stats.javaTests + stats.automationTests;

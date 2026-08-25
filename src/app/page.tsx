@@ -10,6 +10,7 @@ import {
   Tag,
 } from "@/components/ui";
 import { externalProjects, labProjects } from "@/content/projects";
+import { automationProjects } from "@/content/automation-projects";
 import { backendProjects } from "@/content/backend-projects";
 import { productProjects } from "@/content/product-projects";
 import { activeSocials, displayName, site } from "@/content/site";
@@ -128,6 +129,28 @@ export default function HomePage() {
 
           <div className="grid gap-5 md:grid-cols-3">
             {backendProjects.map((project) => (
+              <ProjectCard key={project.slug} project={project} />
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-line py-20 sm:py-24">
+        <Container>
+          <SectionHeading
+            eyebrow="Automation"
+            title="AI put to work, with the same discipline"
+            description="A receipt-extraction pipeline where code verifies every number the model produces, and a lead-triage workflow for n8n where the model answers one narrow question and tested rules decide the rest. Multi-provider — Claude, GPT, Gemini, Groq — and every suite runs with no API key."
+            action={
+              <ButtonLink href="/work" variant="secondary">
+                Case studies
+                <ArrowIcon />
+              </ButtonLink>
+            }
+          />
+
+          <div className="grid gap-5 md:grid-cols-2">
+            {automationProjects.map((project) => (
               <ProjectCard key={project.slug} project={project} />
             ))}
           </div>

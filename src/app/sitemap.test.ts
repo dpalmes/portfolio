@@ -26,6 +26,7 @@ describe("sitemap", () => {
     // Named explicitly so deleting a whole category is a deliberate act
     // rather than something a broken derivation does quietly.
     expect(paths()).toContain("/work/secure-api");
+    expect(paths()).toContain("/work/invoice-extraction");
     expect(paths()).toContain("/work/resort");
     expect(paths()).toContain("/work/tuner");
     expect(paths()).toContain("/lab/crm");

@@ -226,6 +226,15 @@ export const site: Site = {
       label: "Tools",
       items: ["SoapUI", "SSMS", "Maven", "Git"],
     },
+    {
+      label: "AI & Automation",
+      items: [
+        "LLM APIs (Claude, GPT, Gemini, Groq)",
+        "n8n",
+        "Prompt evals",
+        "Python",
+      ],
+    },
   ],
 
   url: resolveSiteUrl(),

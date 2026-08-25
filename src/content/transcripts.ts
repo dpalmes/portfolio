@@ -19,6 +19,61 @@ export interface Transcript {
 }
 
 export const transcripts: Record<string, Transcript> = {
+  "invoice-extraction": {
+    command: "python demo/run_demo.py",
+    caption:
+      "Scripted model responses (so it runs with no API key), real everything else. The fabricated total is caught by arithmetic, the repair prompt names the exact disagreement, and the unfixable case lands in the review queue with reasons attached.",
+    lines: [
+      "$ python demo/run_demo.py",
+      "",
+      "1. The model fabricates a total — off by exactly 1,000 pesos.",
+      "   The kind of error that looks plausible and survives a glance.",
+      "",
+      "   After one repair round:",
+      "  status: verified   attempts: 2",
+      "  Bayanihan Construction Supply · 2026-0347 · 2026-01-12 · total 4,065.60",
+      "",
+      "   The repair prompt named the exact disagreement:",
+      "     - subtotal 3,630.00 + VAT 435.60 = 4,065.60, total says 5,065.60",
+      "",
+      "2. The model cannot fix it — same wrong answer twice.",
+      "",
+      "   After the repair round fails:",
+      "  status: needs_review   attempts: 2",
+      "  what the verifier rejected:",
+      "    - subtotal 3,630.00 + VAT 435.60 = 4,065.60, total says 5,065.60",
+      "   -> lands in the review queue with the record and the reasons attached.",
+      "",
+      "3. The queue, as accounting sees it: {'needs_review': 1, 'verified': 1}",
+    ],
+  },
+  "lead-triage": {
+    command: "python evals/run_evals.py --provider mock",
+    caption:
+      "Twelve labelled leads through the local mock — same wire format the n8n flow uses, no accounts. The 11/12 is honest: the mock's keyword rules misread one lead, and the harness caught it, which is the job.",
+    lines: [
+      "$ python mock/llm_server.py &",
+      "$ python evals/run_evals.py --provider mock",
+      "",
+      "lead                   expected           got                route",
+      "------------------------------------------------------------------------",
+      "Maria Santos           sales/normal       sales/normal       sales_pipeline",
+      "Jun Reyes              support/urgent     billing/urgent     escalate",
+      "A. Cruz                billing/urgent     billing/urgent     escalate",
+      "CONGRATULATIONS WINNE  spam/urgent        spam/urgent        archive",
+      "Liza Ramos             support/normal     support/normal     inbox",
+      "Ben Torres             sales/normal       sales/normal       sales_pipeline",
+      "Grace Uy               billing/normal     billing/normal     inbox",
+      "Paolo Lim              sales/normal       sales/normal       sales_pipeline",
+      "Rita Gomez             support/urgent     support/urgent     escalate",
+      "D. Villanueva          other/low          other/low          inbox",
+      "Free Crypto Now        spam/urgent        spam/urgent        archive",
+      "Nina Robles            billing/urgent     billing/urgent     escalate",
+      "------------------------------------------------------------------------",
+      "label: 11/12   urgency: 12/12   route: 12/12",
+      "  confused support -> billing: 1",
+    ],
+  },
   "stream-processor": {
     command: "./demo/run-demo.sh",
     caption:

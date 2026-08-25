@@ -7,6 +7,7 @@
  * delete them.
  */
 
+import { automationProjects } from "./automation-projects";
 import { backendProjects } from "./backend-projects";
 import { productProjects } from "./product-projects";
 import { stats } from "./stats";
@@ -18,7 +19,7 @@ export interface CaseStudySection {
   note?: string;
 }
 
-export type ProjectKind = "backend" | "product" | "lab";
+export type ProjectKind = "backend" | "automation" | "product" | "lab";
 
 export interface Project {
   slug: string;
@@ -221,6 +222,7 @@ export const labProjects = projects;
  */
 export const allProjects: Project[] = [
   ...backendProjects,
+  ...automationProjects,
   ...productProjects,
   ...projects,
 ];
