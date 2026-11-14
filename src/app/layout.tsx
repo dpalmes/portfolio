@@ -76,6 +76,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      // Tells the router to switch off the CSS smooth scrolling while it
+      // changes page. Without it the jump to the top of a new page is
+      // animated, and a second click part-way through leaves the page
+      // stranded wherever the animation had reached.
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
       className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full`}
     >
